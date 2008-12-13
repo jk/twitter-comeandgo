@@ -30,6 +30,4 @@ Die Skripte stehen unter der Creative Commons Licence 3.0 Attirbution-Share Alik
 Das sollte für's erste alles sein. Man ruft nun über seinen Browser die index.php auf, welche aus den gesammelten Followerlisten die Statistik erstellt. Möglichkeiten zur Optimierung sollten genügend vorhanden sein.
 
 5. Bekannte Probleme:
-Ich hatte noch keine Lust irgendeine Routine zu schreiben, welche das aktuelle Avatarbild auf der Statistikseite automatisch updated. Jetzt muss man das eben von Hand machen. Ändert sich ja eh nicht so oft… wer sich dazu berufen fühlt. Patches nehme ich gerne entgegen.
-
-Achja der Name des Autors und sein üblicher Standort stehen auch noch hardcoded im Skript. Das sollte man wohl auch noch anpassen.
+Ausser quick'n'dirty Stil? Keine.

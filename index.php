@@ -1,13 +1,8 @@
 <?php
-/**
-* In Zeile 67 solltet ihr noch die URL zu eurem Avatarbildchen anpassen…
-*/
-
-setlocale(LC_TIME, "de_DE");
-
 require_once('config.php');
 
-define('DIR', realpath('.').'/'.strtolower(USER));
+define('USERDIR', DIR.'/'.strtolower(USER));
+$user = simplexml_load_string(file_get_contents(DIR.'/'.strtolower(USER).'.xml'));
 ?>
 <?= '<?xml version="1.0" encoding="UTF-8"?>'."\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -64,9 +59,9 @@ define('DIR', realpath('.').'/'.strtolower(USER));
 </head>
 
 <body>
-	<img src="images/avatar.png" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
-	<h1><a href="http://twitter.com/<?= USER; ?>">@<?= USER; ?></a> / Jens</h1>
-	<div id="location">Standort: <strong>Marburg</strong></div>
+	<img src="<?= $user->profile_image_url; ?>" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
+	<h1><a href="http://twitter.com/<?= $user->screen_name; ?>">@<?= $user->screen_name; ?></a> / <?= $user->name; ?></h1>
+	<div id="location">Standort: <strong><?= $user->location; ?></strong></div>
 <?php
 
 function parseDate($strTime) {
@@ -78,7 +73,7 @@ function parseDate($strTime) {
 }
 
 $files = array();
-if ($handle = opendir(DIR)) {
+if ($handle = opendir(USERDIR)) {
     while (false !== ($file = readdir($handle))) {
         if (!is_dir($file) && $file != '.' && $file != '..' && substr($file, 0, 1) != '.' ) {
 			$files[] = $file;
@@ -105,14 +100,14 @@ for ($i = 0; $i < min(count($files), DAYS); $i++) {
 	$file = $files[$i];
 	
 	if (ORDER == 'older') {
-		$old		= explode("\n", file_get_contents(DIR.'/'.$file));
-		$new		= explode("\n", file_get_contents(DIR.'/'.$last));
+		$old		= explode("\n", file_get_contents(USERDIR.'/'.$file));
+		$new		= explode("\n", file_get_contents(USERDIR.'/'.$last));
 		$oldDate	= parseDate($last);
 		$newDate	= parseDate($file);
 	}
 	else {
-		$old		= explode("\n", file_get_contents(DIR.'/'.$last));
-		$new		= explode("\n", file_get_contents(DIR.'/'.$file));
+		$old		= explode("\n", file_get_contents(USERDIR.'/'.$last));
+		$new		= explode("\n", file_get_contents(USERDIR.'/'.$file));
 		$oldDate	= parseDate($file);
 		$newDate	= parseDate($last);
 	}

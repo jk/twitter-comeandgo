@@ -1,7 +1,5 @@
 #!/usr/bin/php
 <?php
-setlocale(LC_TIME, "de_DE");
-
 require_once('config.php');
 
 if (!file_exists(realpath(DIR.'/'.strtolower(USER)))) {
@@ -55,6 +53,8 @@ function printList($arr) {
 #curl_setopt($curl, CURLOPT_POSTFIELDS, "status=".$msg);
 $buffer = curl_exec($curl);
 $xml = simplexml_load_string($buffer);
+
+file_put_contents(DIR.'/'.strtolower(USER).'.xml', $buffer);
 
 $follower = $xml->followers_count;
 $friends  = $xml->friends_count;
