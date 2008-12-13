@@ -30,3 +30,5 @@ Das sollte für's erste alles sein. Man ruft nun über seinen Browser die index.
 
 5. Bekannte Probleme:
 Ich hatte noch keine Lust irgendeine Routine zu schreiben, welche das aktuelle Avatarbild auf der Statistikseite automatisch updated. Jetzt muss man das eben von Hand machen. Ändert sich ja eh nicht so oft… wer sich dazu berufen fühlt. Patches nehme ich gerne entgegen.
+
+Achja der Name des Autors und sein üblicher Standort stehen auch noch hardcoded im Skript. Das sollte man wohl auch noch anpassen.
