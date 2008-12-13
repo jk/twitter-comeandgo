@@ -1,0 +1,28 @@
+Twitter Come and Go
+===================
+
+Ein paar PHP-Skripte um einen Statistik über die eigenen Follower zu erstellen. Vor allem werden aber auch Follower angezeigt, die einem nicht mehr folgen.
+
+1. Kontakt:
+Jens Kohl <jens.kohl+twitter@gmail.com>
+www: http://github.com/jk/twitter-comeandgo/
+
+Ich leiste keinen Enduser-Support. Wer's nicht zum Laufen bekommt fragt entweder jemand anderen oder hat Pech gehabt :P
+
+2. Vorraussetzungen:
+• Webserver + PHP 5.x
+	- curl-Extension
+	- Schreibrechte im jeweiligen Verzeichnis
+• Crontabs (für die Benutzung von Webcrontabs, muss getFollower.php womöglich umgeschrieben werden)
+• Twitter-Account ;)
+
+3. Installation:
+
+• Die einfachste Möglichkeit die beiden Skripte zu betreiben besteht darin. Die Dateien in ein Verzeichnis zu kopieren, welches vom Webserver gelesen werden kann. In diesem Verzeichnis müssen PHP-Skripte ausführbar sein.
+• In config.php Benutzername und Passwort anpassen.
+• Über crontab -e passt man seinen eigenen Crontab an wie in crontab.txt beschrieben (Pfadangaben nicht vergessen). Alle 10 Minuten um Mitternacht hat sich als ganz praktisch herausgestellt, da man einerseits seine Statistik täglich erhoben haben möchte und andererseits Twitter manchmal überfordert ist und falsche Ergebnisse liefert. So wird Nachts einfach mehrmals versucht die eigenen Follower abzurufen. Klappt das einmal vernünftig werden nachfolgende Aufrufe an diesem Tag ignoriert.
+
+Das sollte für's erste alles sein. Man ruft nun über seinen Browser die index.php auf, welche aus den gesammelten Followerlisten die Statistik erstellt. Möglichkeiten zur Optimierung sollten genügend vorhanden sein.
+
+4. Bekannte Probleme:
+Ich hatte noch keine Lust irgendeine Routine zu schreiben, welche das aktuelle Avatarbild auf der Statistikseite automatisch updated. Jetzt muss man das eben von Hand machen. Ändert sich ja eh nicht so oft… wer sich dazu berufen fühlt. Patches nehme ich gerne entgegen.

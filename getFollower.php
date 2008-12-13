@@ -2,9 +2,11 @@
 <?php
 setlocale(LC_TIME, "de_DE");
 
-define('USER', 'AndiH');
-define('PASSWD', 'geheim');
-define('DIR', '/home/httpd/jkohl.com/www/twitter'); // in welchem Verzeichnis liegt diese Datei?
+require_once('config.php');
+
+if (!file_exists(realpath(DIR.'/'.strtolower(USER)))) {
+	mkdir(realpath(DIR.'/'.strtolower(USER))));
+}
 
 $filename = DIR . '/' . strtolower(USER).'/'.strftime("%Y%m%d").'_'.strtolower(USER).".txt";
 if (file_exists(realpath('.').'/'.$filename)) {
@@ -76,6 +78,10 @@ curl_close($curl);
 // Save
 foreach($arrFollower as $user)
 	$o[] = strtolower($user['user']['screen_name']);
+
+if (count($o) < 1) {
+	exit("No followers were found. That's unlikey so that no file was created.");
+}
 
 sort($o);
 

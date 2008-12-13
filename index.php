@@ -1,13 +1,13 @@
 <?php
 /**
-* Achtung unten noch Google Analytics anpassen oder rauslöschen
+* In Zeile 67 solltet ihr noch die URL zu eurem Avatarbildchen anpassen…
 */
 
 setlocale(LC_TIME, "de_DE");
-define('USER', 'AndiH');
-define('DIR', realpath('.').'/'.strtolower(USER));
-define('ORDER', 'older');
 
+require_once('config.php');
+
+define('DIR', realpath('.').'/'.strtolower(USER));
 ?>
 <?= '<?xml version="1.0" encoding="UTF-8"?>'."\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -16,6 +16,7 @@ define('ORDER', 'older');
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title><?= USER; ?>'s follower</title>
+	<meta name="viewport" content="width=460, user-scalable=yes" />
 	<style>
 	body {
 		font-family: Helvetica, Arial, sans-serif;
@@ -49,19 +50,21 @@ define('ORDER', 'older');
 		color: gray;
 	}
 	</style>
+	<?php if(!empty(GOOGLE_ANALYTICS_ID)): ?>
 	<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 	</script>
 	<script type="text/javascript">
-		var pageTracker = _gat._getTracker("");
+		var pageTracker = _gat._getTracker("<?= GOOGLE_ANALYTICS_ID; ?>");
 		pageTracker._initData();
 		pageTracker._trackPageview();
 	</script>
+	<?php endif; ?>
 </head>
 
 <body>
-	<img src="http://s3.amazonaws.com/twitter_production/profile_images/58356754/q618ffrimwhawer_jetable.com_21ae36f7_bigger.jpg" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
+	<img src="images/avatar.png" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
 	<h1><a href="http://twitter.com/<?= USER; ?>">@<?= USER; ?></a> / Jens</h1>
 	<div id="location">Standort: <strong>Marburg</strong></div>
 <?php
@@ -93,7 +96,7 @@ $adds = array();
 $dels = array();
 
 $last = '';
-for ($i = 0; $i < min(count($files), 14); $i++) {
+for ($i = 0; $i < min(count($files), DAYS); $i++) {
 	if ($i == 0) {
 		$last = $files[$i];
 		continue;
@@ -140,14 +143,14 @@ for ($i = 0; $i < min(count($files), 14); $i++) {
 ?>
 	<div style="clear: both;">
 		<div class="day"><?= strftime("%d", $newDate); ?><span style="font-size: 9px;"><br /><?= strftime("%b %y", $newDate); ?></span></div>
-		<div style="float:left; width:250px; padding-left: 5px;">
-			<h3>Hinzugekommene: <? if (count($add) != 0): ?><span class="cntAdd"><?= count($add); ?></span><? endif; ?></h3>
+		<div style="float:left; width:200px; padding-left: 5px;">
+			<h3>Neue: <? if (count($add) != 0): ?><span class="cntAdd"><?= count($add); ?></span><? endif; ?></h3>
 			<ul>
 <? foreach ($add as $user): ?>
 				<li style="list-style-image:url(images/user_add.png);"><a href="http://twitter.com/<?= $user; ?>">@<?= $user; ?></a></li>
 <? endforeach; ?>
 <? if (count($add) == 0): ?>
-				<li style="list-style-image:url(images/user_go.png); color: lightgray;">keine Veränderung</li>
+				<li style="list-style-image:url(images/user_go.png); color: lightgray;">…</li>
 <? endif;?>
 			</ul>
 		</div>
@@ -158,13 +161,13 @@ for ($i = 0; $i < min(count($files), 14); $i++) {
 				<li style="list-style-image:url(images/user_del.png);"><a href="http://twitter.com/<?= $user; ?>">@<?= $user; ?></a></li>
 <? endforeach; ?>
 <? if (count($del) == 0): ?>
-				<li style="list-style-image:url(images/user_go.png); color: lightgray;">keine Veränderung</li>
+				<li style="list-style-image:url(images/user_go.png); color: lightgray;">…</li>
 <? endif; ?>
 			</ul>
 		</div>
-<? } // for ?>
 	</div>
-
+<? } // for ?>
+	
 <?php
 for($i = count($adds)-1; $i >= 0; $i--) {
 	$dataStr[] = $adds[$i] - $dels[$i];
@@ -172,8 +175,9 @@ for($i = count($adds)-1; $i >= 0; $i--) {
 }
 ?>
 <div style="clear:both; padding-top: 20px;">
-<h2>Grafische Darstellung</h2>
-<img src="http://chart.apis.google.com/chart?cht=lc&chs=600x100&chco=0077CC&chm=B,E6F2FA,0,0,0&chls=1,0,0&chd=t:<?= implode(',', $dataStr); ?>&chds=<?= min($dataStr)-1; ?>,<?= max($dataStr); ?>&chxt=x,y&chxl=0:|<?= $labelStr[0]; ?>||<?= $labelStr[count($labelStr)-1]; ?>|1:|<?= min($dataStr)-1; ?>|<?= max($dataStr); ?>" width="600" height="100" border="0" />
+<h2 style="margin-bottom: 0px;">Grafische Darstellung</h2>
+<small>der letzten <?=min(count($files), DAYS); ?> Tage.</small><br /><br />
+<img src="http://chart.apis.google.com/chart?cht=lc&chs=450x100&chco=E6F2FA,0077CC&chm=B,E6F2FA,0,0,0&chls=1,0,0&chd=t:0,0|<?= implode(',', $dataStr); ?>&chds=<?= min($dataStr)-1; ?>,<?= max($dataStr); ?>&chxt=x,y&chxl=0:|<?= $labelStr[0]; ?>||<?= $labelStr[count($labelStr)-1]; ?>|1:|<?= min($dataStr)-1; ?>|<?= max($dataStr); ?>" width="450" height="100" border="0" />
 </div>
 		
 </body>
