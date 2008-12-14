@@ -48,7 +48,7 @@ $user = simplexml_load_string(file_get_contents(DIR.'/'.strtolower(USER).'.xml')
 		color: gray;
 	}
 	</style>
-	<?php if(!empty(GOOGLE_ANALYTICS_ID)): ?>
+	<?php if(GOOGLE_ANALYTICS_ID != ''): ?>
 	<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -62,7 +62,7 @@ $user = simplexml_load_string(file_get_contents(DIR.'/'.strtolower(USER).'.xml')
 </head>
 
 <body>
-	<img src="<?= $user->profile_image_url; ?>" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
+	<img src="<?= str_replace('_normal', '_bigger', $user->profile_image_url); ?>" border="0" align="left" style="padding-right: 5px; padding-bottom: 10px;" width=73 height=73 />
 	<h1><a href="http://twitter.com/<?= $user->screen_name; ?>">@<?= $user->screen_name; ?></a> / <?= $user->name; ?></h1>
 	<div id="location">Standort: <strong><?= $user->location; ?></strong></div>
 <?php
