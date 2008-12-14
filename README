@@ -15,15 +15,16 @@ Die Skripte stehen unter der Creative Commons Licence 3.0 Attirbution-Share Alik
 
 3. Vorraussetzungen:
 • Webserver + PHP 5.x
-	- curl-Extension
+	- CURL Extension
+	- SimpleXML Extension
 	- Schreibrechte im jeweiligen Verzeichnis
 • Crontabs (für die Benutzung von Webcrontabs, muss getFollower.php womöglich umgeschrieben werden)
 • Twitter-Account ;)
 
 4. Installation:
 
-• Die einfachste Möglichkeit die beiden Skripte zu betreiben besteht darin. Die Dateien in ein Verzeichnis zu kopieren, welches vom Webserver gelesen werden kann. In diesem Verzeichnis müssen PHP-Skripte ausführbar sein.
-• In config.php Benutzername und Passwort anpassen.
+• Die einfachste Möglichkeit die beiden Skripte zu betreiben besteht darin. Die Dateien in ein Verzeichnis zu kopieren, welches vom Webserver gelesen werden kann. In diesem Verzeichnis müssen PHP-Skripte ausführbar sein und Schreibrechte haben.
+• Konfiguration in config.php anpassen (Twitter-Username und -Passwort, Pfad, etc.)
 • Über crontab -e passt man seinen eigenen Crontab an wie in crontab.txt beschrieben (Pfadangaben nicht vergessen). Alle 10 Minuten um Mitternacht hat sich als ganz praktisch herausgestellt, da man einerseits seine Statistik täglich erhoben haben möchte und andererseits Twitter manchmal überfordert ist und falsche Ergebnisse liefert. So wird Nachts einfach mehrmals versucht die eigenen Follower abzurufen. Klappt das einmal vernünftig werden nachfolgende Aufrufe an diesem Tag ignoriert.
 • getFollower.php ausführbar machen mit: chmod +x getFollower.php
 

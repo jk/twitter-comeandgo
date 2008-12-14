@@ -8,9 +8,12 @@ $user = simplexml_load_string(file_get_contents(DIR.'/'.strtolower(USER).'.xml')
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 <head>
 	<title><?= USER; ?>'s follower</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="content-language" content="de"/>
+	<meta name="revisit-after" content="1 days"/>
 	<meta name="viewport" content="width=460, user-scalable=yes" />
 	<style>
 	body {
@@ -174,6 +177,13 @@ for($i = count($adds)-1; $i >= 0; $i--) {
 <small>der letzten <?=min(count($files), DAYS); ?> Tage.</small><br /><br />
 <img src="http://chart.apis.google.com/chart?cht=lc&chs=450x100&chco=E6F2FA,0077CC&chm=B,E6F2FA,0,0,0&chls=1,0,0&chd=t:0,0|<?= implode(',', $dataStr); ?>&chds=<?= min($dataStr)-1; ?>,<?= max($dataStr); ?>&chxt=x,y&chxl=0:|<?= $labelStr[0]; ?>||<?= $labelStr[count($labelStr)-1]; ?>|1:|<?= min($dataStr)-1; ?>|<?= max($dataStr); ?>" width="450" height="100" border="0" />
 </div>
+
+<!-- Copyright //-->
+<div id="copyright" style="clear:both; padding-top: 20px">
+<a href="http://creativecommons.org/licenses/by-sa/3.0/">
+	<img src="images/by-sa.png" width="88" height="31" align="left" hspace="5" alt="Creative Commons by-share alike button" title="Creative Commons by-share alike" border="0" /></a> 
+<a href="http://github.com/jk/twitter-comeandgo/tree/master">Twitter-comeandgo</a><br /><small>(source code available)</small><br />
+<!-- /Copyright //-->
 		
 </body>
 </html>
