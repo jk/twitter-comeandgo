@@ -5,7 +5,7 @@ require_once('config.php');
 define('USERDIR', DIR.'/'.strtolower(USER));
 
 if (!file_exists(USERDIR)) {
-	mkdir(USERDIR, 0700);
+	mkdir(USERDIR, 0755);
 }
 
 $filename = USERDIR.'/'.strftime("%Y%m%d").'_'.strtolower(USER).".txt";
