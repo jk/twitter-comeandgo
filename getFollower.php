@@ -2,12 +2,14 @@
 <?php
 require_once('config.php');
 
-if (!file_exists(realpath(DIR.'/'.strtolower(USER)))) {
-	mkdir(realpath(DIR.'/'.strtolower(USER))));
+define('USERDIR', DIR.'/'.strtolower(USER));
+
+if (!file_exists(USERDIR)) {
+	mkdir(USERDIR, 0700);
 }
 
-$filename = DIR . '/' . strtolower(USER).'/'.strftime("%Y%m%d").'_'.strtolower(USER).".txt";
-if (file_exists(realpath('.').'/'.$filename)) {
+$filename = USERDIR.'/'.strftime("%Y%m%d").'_'.strtolower(USER).".txt";
+if (file_exists($filename)) {
 	exit($filename.' already exists.'."\n");
 }
 
@@ -80,16 +82,12 @@ foreach($arrFollower as $user)
 	$o[] = strtolower($user['user']['screen_name']);
 
 if (count($o) < 1) {
-	exit("No followers were found. That's unlikey so that no file was created.");
+	exit("No followers were found. That's unlikey so that no file was created.\n");
 }
 
 sort($o);
 
 $out = implode("\n", $o);
-
-if (!file_exists(realpath('.').'/'.strtolower(USER))) {
-	mkdir(realpath('.').'/'.strtolower(USER));
-}
 
 file_put_contents($filename, $out);
 echo $out;

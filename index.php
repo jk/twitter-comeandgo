@@ -85,7 +85,7 @@ if ($handle = opendir(USERDIR)) {
 	closedir($handle);
 }
 
-if (ORDER == 'older')
+if (strtolower(ORDER) == 'older')
 	rsort($files);
 else
 	sort($files);
