@@ -56,7 +56,11 @@ function printList($arr) {
 $buffer = curl_exec($curl);
 $xml = simplexml_load_string($buffer);
 
-file_put_contents(DIR.'/'.strtolower(USER).'.xml', $buffer);
+if (strlen($buffer) < 10) {
+	echo "User-Data downloaded from Twitter was too short, so the local copy, if it exists, isn't replaced.\n";
+} else {
+	file_put_contents(DIR.'/'.strtolower(USER).'.xml', $buffer);
+}
 
 $follower = $xml->followers_count;
 $friends  = $xml->friends_count;
