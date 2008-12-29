@@ -1,7 +1,7 @@
 <?php
-define('USER', 'username');
+define('USER', 'DASKAjA');
 define('PASSWD', 'password');
-define('DIR', '/path/to/this/file');
+define('DIR', '/Users/jkohl/Sites/twitter-dev/twitter-comeandgo');
 define('ORDER', 'older');
 define('DAYS', 14);
 define('GOOGLE_ANALYTICS_ID', ''); # UA-#####-#
