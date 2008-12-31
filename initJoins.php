@@ -15,6 +15,7 @@ if ($handle = opendir(USERDIR)) {
 
 $users = array();
 $dates = array();
+$entrys = array();
 
 foreach($files as $thisFile) {
 	$buffer = file_get_contents(USERDIR.'/'.$thisFile);
@@ -23,14 +24,23 @@ foreach($files as $thisFile) {
 		if (strlen($user) > 0 && !in_array($user, $users)) {
 			$users[] = $user;
 			$dates[] = substr($thisFile, 0, 8);
+			$entrys[] = array('user' => $user, 'join' => substr($thisFile, 0, 8));
 		}
 	}
 }
 
+// XML
 $out = "<joins>\n";
 for ($i=0; $i < count($users); $i++) { 
-	$out .= "\t<user name='"$users[$i]."' date='".$dates[$i]."' />\n";
+	$out .= "\t<user name='".$users[$i]."' date='".$dates[$i]."' />\n";
 }
-$out .= '</joins>'
-file_put_contents('joins_'.strtolower(USERNAME).'.xml');
+$out .= "</joins>\n";
+file_put_contents('joins_'.strtolower(USER).'.xml', $out);
+
+// Plain text
+$out = '';
+foreach ($entrys as $thisEntry) {
+	$out .= $thisEntry['user'].';'.$thisEntry['join'].';'.$thisEntry['left']."\n";
+}
+file_put_contents('dates_'.strtolower(USER).'.txt', $out);
 ?>
