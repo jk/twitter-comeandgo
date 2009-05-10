@@ -8,10 +8,20 @@ if (!file_exists(USERDIR)) {
 	mkdir(USERDIR, 0755);
 }
 
+$yesterday = strftime("%Y%m%d", strtotime('-1 day', mktime()));
+
+$fileYesterday = USERDIR.'/'.$yesterday.'_'.strtolower(USER).".txt";
 $filename = USERDIR.'/'.strftime("%Y%m%d").'_'.strtolower(USER).".txt";
+
 if (file_exists($filename)) {
 	exit($filename.' already exists.'."\n");
 }
+
+define('FLAG_YESTERDAY_EXISTS', file_exists($fileYesterday));
+
+$countYesterday = 0;
+if (FLAG_YESTERDAY_EXISTS)
+	$countYesterday = count(explode("\n", file_get_contents($fileYesterday)));
 
 // Twitter
 define('USER_URL', 'http://twitter.com/users/show/'.USER.'.xml');
@@ -87,6 +97,8 @@ foreach($arrFollower as $user)
 
 if (count($o) < 1) {
 	exit("No followers were found. That's unlikey so that no file was created.\n");
+} elseif (FLAG_YESTERDAY_EXISTS && ($countYesterday * 0.8 >= count($o))) {
+	exit("More than a 20% follower lost opposed to yesterday. It's very likely that a dataloss occured.");
 }
 
 sort($o);
